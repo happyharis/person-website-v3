@@ -3,7 +3,9 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import SocialMediaLink from "../components/SocialMediaLink.astro";
 import Link from "../components/Link.astro";
-import type { Identity,  SocialLink, HomePageContent } from "../types/config";
+import type { Identity,  SocialLink, HomePageContent, AboutPageContent } from "../types/config";
+import ResumeItem from "../components/ResumeItem.astro";
+import { Markdown } from "@astropub/md";
 
 export const identity: Identity = {
     name: "Haris Samingan",
@@ -11,7 +13,7 @@ export const identity: Identity = {
     email: "haris@edugrow.org",
   };
 
-const socialLinks: SocialLink[] = [
+  export const socialLinks: SocialLink[] = [
     {
       title: "YouTube",
       url: "https://www.youtube.com/@haris.samingan",
@@ -31,6 +33,92 @@ const socialLinks: SocialLink[] = [
       external: true,
     },
   ];
+
+
+  export const aboutPageContent: AboutPageContent = {
+  seo: {
+    title: "About | Haris Samingan",
+    description:
+      "I’m Haris Samingan, an entrepreneur in Singapore 🇸🇬 building a 6 figure business by end of 2025. Currently running EduGrow, where we help scale tuition and education businesses.",
+    image: identity.logo,
+  },
+  subtitle: "Minimising regrets every day",
+  about: {
+    description: `I’m Haris Samingan, an entrepreneur in Singapore 🇸🇬 building a 6 figure business by end of 2025. Currently running EduGrow, where we help scale tuition and education businesses.`, // Markdown is supported
+    image_l: {
+      url: "/stock-1.jpg",
+      alt: "Left Picture",
+    },
+    image_r: {
+      url: "/stock-2.jpg",
+      alt: "Right Picture",
+    },
+  },
+  work: {
+    description: `Here is my career`, // Markdown is supported
+    items: [
+      {
+        title: "Founder",
+        company: {
+          name: "EduGrow.org",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "https://edugrow.org",
+        },
+        date: "2024 - Present",
+      },
+      {
+        title: "Head of Operations",
+        company: {
+          name: "Sigma School",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "#home",
+        },
+        date: "2023 - 2024",
+      },
+      {
+        title: "Founder",
+        company: {
+          name: "Next Level Academy (Failed)",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "#home",
+        },
+        date: "2022 - 2023",
+      },
+      {
+        title: "Co-Founder",
+        company: {
+          name: "Zenith Coding Academy (Failed)",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "#home",
+        },
+        date: "2021 - 2022",
+      },
+      {
+        title: "Founder",
+        company: {
+          name: "Learn Flutter Code (Failed)",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "#home",
+        },
+        date: "2019 - 2021",
+      },
+      {
+        title: "Software Developer",
+        company: {
+          name: "Blood",
+          image: "https://sg.getblood.com/cdn/shop/files/Red_Blood_Logo_280_x_80px_160x.png?v=1646192355",
+          url: "https://sg.getblood.com/",
+        },
+        date: "2018 - 2019",
+      },
+    ],
+  },    
+  connect: {
+    description: `Feel free to connect with me on any of the following platforms.`, // Markdown is supported
+    links: socialLinks,
+  },
+};
+
 
 const homePageContent: HomePageContent = {
     seo: {
@@ -94,4 +182,32 @@ const homePageContent: HomePageContent = {
       }
     </div>
   </section>
+
+  <section class="mt-10 max-w-2xl mx-auto px-6">
+    <div class="flex flex-col min-[410px]:flex-row">
+      <Image
+        src={aboutPageContent.about.image_l.url}
+        alt={aboutPageContent.about.image_l.alt}
+        width={350}
+        height={250}
+        class="w-[350px] h-[250px] object-cover rounded-xl -rotate-6"
+      />
+      <Image
+        src={aboutPageContent.about.image_r.url}
+        alt={aboutPageContent.about.image_r.alt}
+        width={150}
+        height={250}
+        class="w-[150px] h-[250px] object-cover rounded-xl rotate-6 mx-auto sm:ml-auto"
+      />
+    </div>
+  </section>
+  <section class="my-20 mt-32 max-w-2xl mx-auto px-6 sm:flex sm:gap-16">
+    <h2 class="mb-8 sm:mb-0 opacity-60">Career</h2>
+    <div>
+      <div class="grid grid-cols-1 group">
+        {aboutPageContent.work.items.map((item) => <ResumeItem {...item} />)}
+      </div>
+    </div>
+  </section>
+
 </Layout>
